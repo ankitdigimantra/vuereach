@@ -9,12 +9,20 @@
         Reach!
       </h1>
     </div>
+    <div class="content">
+      <p :class="{ active: activeStep === 'start' }">Let's get started</p>
+      <p :class="{ active: activeStep === 'progress' }">Shipping Preferences</p>
+      <p :class="{ active: activeStep === 'account' }">Your Account is ready</p>
+    </div>
   </div>
 </template>
 
 <script scoped>
 export default {
   name: "LeftBar",
+  props: {
+    activeStep: String 
+  },
   methods: {
     selectMode(mode) {
       this.$emit("modeSelected", mode);
@@ -25,40 +33,49 @@ export default {
 
 <style scoped>
 h1 {
-  color: #000000
+  color: #000000;
+  font-size: xxx-large;
 }
+
 .sidebar {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column; 
 }
-
 
 .contain {
-  display: flex;
-  justify-content: start;
-  margin-bottom: 160px;
+  margin-bottom: 140px; 
 }
 
-.side-contain {
-  margin: 20px;
-  padding: 0px;
-  font-size: 14px;
-}
-
-.head {
-  margin: 0px;
-  justify-content: start;
-}
 .progressbar {
-  gap: 0px;
+  margin-bottom: 20px; 
+}
+
+.content {
+  margin-bottom: 20px;
+  align-items: flex-start;
   display: flex;
-  justify-content: start;
-  align-items: start;
-  font-size: 28px;
-  font-weight: bolder;
+  flex-direction: column;
+}
+
+p {
+  margin-left: 20px; 
+  position: relative;
+}
+
+.active::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 50%;
 }
 </style>
+
 
 <!--<template>
   <div>
