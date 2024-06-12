@@ -97,13 +97,28 @@
           />
         </div>
         <div class="form-actions">
-          <button class="next-button" type="submit">Next</button>
+          <button
+            class="next-button"
+            type="submit"
+            @click="goToShippingPreferences"
+          >
+            Next
+          </button>
         </div>
       </form>
     </div>
   </div>
 </template>
-<script></script>
+<script>
+export default {
+  name: "LetStart",
+  methods: {
+    goToShippingPreferences() {
+      this.$emit("nextClicked");
+    },
+  },
+};
+</script>
 
 <style scoped>
 h1 {

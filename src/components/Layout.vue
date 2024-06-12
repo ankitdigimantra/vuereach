@@ -2,7 +2,8 @@
   <div class="layout">
     <div class="division">
       <LeftBar @modeSelected="changeMode" class="leftbar" />
-      <LetStart @modeSelected="changeMode" class="rightbar" />
+      <!-- <LetStart @modeSelected="changeMode" class="rightbar" /> -->
+      <component :is="currentComponent" />
     </div>
   </div>
 </template>
@@ -10,13 +11,29 @@
 <script>
 import LeftBar from "./LeftSide/LeftBar.vue";
 import LetStart from "./RightSide/LetStart.vue";
+import ShipPrefer from "./RightSide/ShipPrefer.vue";
 
 export default {
   name: "LayoutTemp",
   components: {
     LeftBar,
-    LetStart
-  }
+    LetStart,
+    ShipPrefer,
+  },
+  data() {
+    return {
+      currentComponent: "LetStart", // Initial component
+    };
+  },
+  methods: {
+    changeMode() {
+      // Handle mode change if needed
+    },
+    // Method to handle Next button click from LetStart component
+    handleNextClicked() {
+      this.currentComponent = "ShipPrefer"; // Switch to ShipPrefer component
+    },
+  },
 };
 </script>
 
