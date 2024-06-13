@@ -24,6 +24,11 @@ export default {
   color: #2c3e50;
   height: 100%;
 }
+body {
+  height: 100vh;
+  margin: 0;
+  font: 16px;
+}
 
 .layout{
 width: 100%;

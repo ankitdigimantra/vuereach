@@ -6,7 +6,7 @@
         <h1>Let's get started!</h1>
         <p class="para">Please provide your billing address.</p>
       </div>
-
+ 
       <form @submit.prevent="proceedToNextPage">
         <div class="form-group">
           <div class="flex">
@@ -51,7 +51,7 @@
             placeholder="1234 queen address"
             required
           />
-
+ 
           <div class="flex">
             <div class="column">
               <label
@@ -84,7 +84,7 @@
               />
             </div>
           </div>
-
+ 
           <label class="label" for="password" style="width: 100%; display: flex"
             >Phone Number</label
           >
@@ -97,27 +97,47 @@
           />
         </div>
         <div class="form-actions">
-          <button class="next-button" type="submit">Next</button>
+          <button
+            class="next-button"
+            type="submit"
+            @click="goToShippingPreferences"
+          >
+            Next
+          </button>
         </div>
       </form>
     </div>
   </div>
 </template>
-<script></script>
-
+<script>
+import EventBus from '@/EventBus';
+ 
+export default {
+  name: "LetStart",
+  
+  methods: {
+    goToShippingPreferences() {
+      EventBus.emit("nextClicked");
+    },
+  },
+};
+</script>
+ 
 <style scoped>
 h1 {
   color: #2e6666;
   margin: 0;
   padding: 0;
 }
-
+ 
 .aligncenter {
   display: flex;
-  justify-content: center;
-  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  height : 100%;
+  /* padding-bottom: 410px; */
 }
-
+ 
 .para {
   color: rgb(143, 143, 143);
   margin-top: 10px;
@@ -127,10 +147,10 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+ 
   /* padding: 0 80px 0 160px; */
 }
-
+ 
 .rightbar {
   display: flex;
   flex-direction: column;
@@ -141,18 +161,18 @@ h1 {
   display: flex;
   justify-content: space-between;
 }
-
+ 
 .column {
   width: 48%; /* Adjust the width as needed */
   display: flex;
   flex-direction: column;
 }
-
+ 
 .label {
   margin-bottom: 8px;
   font-size: 16px;
 }
-
+ 
 input {
   padding: 12px;
   font-size: 16px;
@@ -162,17 +182,17 @@ input {
   width: 100%;
   box-sizing: border-box;
 }
-
+ 
 .form-group {
   margin-bottom: 1rem;
   justify-content: flex-start;
 }
-
+ 
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
 }
-
+ 
 .form-group input {
   width: 100%;
   padding: 0.6rem 0.4rem 0.6rem 0.4rem;
@@ -180,14 +200,14 @@ input {
   border-radius: 4px;
   padding-left: 0.3rem;
 }
-
+ 
 .form-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 2rem 0rem 2rem 0rem;
 }
-
+ 
 .form-actions button {
   padding: 0.8rem 1rem;
   border: none;
@@ -197,18 +217,18 @@ input {
   background-color: #2e6666;
   width: 100%;
 }
-
+ 
 .next-button {
   padding: 4px;
 }
 </style>
-
+ 
 <!--<template>
     <div class="modal-overlay" @click.self="$emit('close')">
       <div class="white">
       <div class="modal-content">
         <div class="logincontain">
-           <img alt="Vue logo" src="../assets/logo.svg" width="180" height="100" /> 
+           <img alt="Vue logo" src="../assets/logo.svg" width="180" height="100" />
           <h1>Login</h1>
         </div>
         <form @submit.prevent="login">
