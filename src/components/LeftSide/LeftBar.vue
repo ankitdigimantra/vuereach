@@ -5,29 +5,108 @@
     </div>
     <div class="progressbar">
       <h1 class="head">
-        Welcome to <br />
-        Reach!
+        Welcome to
+        <br />Reach!
       </h1>
     </div>
     <div class="content">
-      <p :class="{ active: activeStep === 'start' }">Let's get started</p>
-      <p :class="{ active: activeStep === 'progress' }">Shipping Preferences</p>
-      <p :class="{ active: activeStep === 'account' }">Your Account is ready</p>
+      <div class="step-container">
+        <div class="progress-indicator-circle" :class="{
+          greenBackground:
+            isActiveStep('progress') || isCompletedStep('progress'),
+        }">
+          <div class="progress-inside-indicator-circle" :class="{
+            greenBackground:
+              isActiveStep('start') || isCompletedStep('start'),
+          }"></div>
+        </div>
+
+        <div class="progress-indicator" :class="{
+          greenBackground: isActiveStep('start') || isCompletedStep('start'),
+        }"></div>
+        <div class="step" :class="{
+          textColorActive: isActiveStep('start'),
+          textColorCompleted: isCompletedStep('start'),
+        }">
+          <p>Let's get started</p>
+        </div>
+      </div>
+      <!-- //progresss baar start from herer -->
+      <div class="step-container">
+        <div class="progress-indicator-circle-two" :class="{
+          greenBackground:
+            isActiveStep('account') || isCompletedStep('account'),
+        }">
+          <div class="progress-inside-indicator-circle-two" :class="{
+            greenBackground:
+              isActiveStep('progress') || isCompletedStep('progress'),
+          }"></div>
+        </div>
+
+        <div class="progress-indicator-two" :class="{
+          greenBackground:
+            isActiveStep('progress') || isCompletedStep('progress'),
+        }"></div>
+        <div class="step" :class="{
+          textColorActive: isActiveStep('progress'),
+          textColorCompleted: isCompletedStep('progress'),
+        }">
+          <p>Shipping Preferences</p>
+        </div>
+      </div>
+
+      <!-- /account ready start from herer -->
+      <div class="step-container">
+        <div class="progress-indicator-circle-three" :class="{ greenBac }">
+          <div class="progress-inside-indicator-circle-three" :class="{
+            greenBackground:
+              isActiveStep('account') || isCompletedStep('account'),
+          }"></div>
+        </div>
+
+        <!-- <div class="progress-indicator" :class="{ greenBackground: isActiveStep('account') || isCompletedStep('account') }"></div> -->
+        <div class="step" :class="{
+          textColorActive: isActiveStep('account'),
+          textColorCompleted: isCompletedStep('account'),
+        }">
+          <p>Your Account is ready</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script scoped>
+<script>
+import EventBus from "@/EventBus";
+
 export default {
   name: "LeftBar",
-  props: {
-    activeStep: String 
+  data() {
+    return {
+      activeStep: "start",
+      steps: ["start", "progress", "account"]
+    };
   },
   methods: {
-    selectMode(mode) {
-      this.$emit("modeSelected", mode);
+    isActiveStep(step) {
+      return this.activeStep === step;
     },
+    isCompletedStep(step) {
+      const currentStepIndex = this.steps.indexOf(this.activeStep);
+      const stepIndex = this.steps.indexOf(step);
+      return stepIndex < currentStepIndex;
+    },
+    handleNextClicked() {
+      const currentStepIndex = this.steps.indexOf(this.activeStep);
+      if (currentStepIndex < this.steps.length - 1) {
+        this.activeStep = this.steps[currentStepIndex + 1];
+      }
+    }
   },
+  mounted() {
+    EventBus.on("nextClicked", this.handleNextClicked);
+    EventBus.on("shipNextClicked", this.handleNextClicked);
+  }
 };
 </script>
 
@@ -37,195 +116,159 @@ h1 {
   font-size: xxx-large;
 }
 
+p {
+  color: #818181;
+  margin: 30px;
+}
+
+.textColorActive p {
+  color: #000000;
+}
+
+.textColorCompleted p {
+  color: #000000;
+}
+
+.greenBackground {
+  background-color: #2e6666;
+}
+
+.greenBorder {
+  background-color: #2e6666;
+}
+
 .sidebar {
   width: 100%;
-  display: flex;
-  flex-direction: column; 
-}
-
-.contain {
-  margin-bottom: 140px; 
-}
-
-.progressbar {
-  margin-bottom: 20px; 
-}
-
-.content {
-  margin-bottom: 20px;
-  align-items: flex-start;
   display: flex;
   flex-direction: column;
 }
 
-p {
-  margin-left: 20px; 
+.contain {
+  margin-bottom: 140px;
+}
+
+.progressbar {
+  margin-bottom: 20px;
+}
+
+.content {
+  margin-bottom: 40px;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
   position: relative;
 }
 
-.active::before {
-  content: "";
-  position: absolute;
-  left: -20px;
-  top: 50%;
-  transform: translateY(-50%);
+.step-container {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+
+  height: 80px;
+  /* Adjust the height as needed */
+}
+
+.progress-inside-indicator-circle {
   width: 10px;
   height: 10px;
-  background-color: green;
+  /* Adjust to match the step-container height */
+  /* margin-right: 10px; */
+  border: 3px solid #2e6666;
   border-radius: 50%;
+  padding: 1px;
+  position: absolute;
+  top: 12px;
+  left: 10px;
+}
+
+.progress-inside-indicator-circle-two {
+  width: 10px;
+  height: 10px;
+  /* Adjust to match the step-container height */
+  /* margin-right: 10px; */
+  border: 3px solid #919191;
+  background-color: #919191;
+  border-radius: 50%;
+  padding: 1px;
+  position: absolute;
+  top: 12px;
+  left: 10px;
+}
+
+.progress-inside-indicator-circle-three {
+  width: 10px;
+  height: 10px;
+  /* Adjust to match the step-container height */
+  /* margin-right: 10px; */
+  border: 3px solid #919191;
+  background-color: #919191;
+  border-radius: 50%;
+  padding: 1px;
+  position: absolute;
+  top: 12px;
+  left: 10px;
+}
+
+.progress-indicator-circle {
+  width: 18px;
+  height: 20px;
+  /* Adjust to match the step-container height */
+  margin-right: 10px;
+  border: 3px solid #2e6666;
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 18px;
+  left: -8px;
+}
+
+.progress-indicator-circle-two {
+  width: 18px;
+  height: 20px;
+  /* Adjust to match the step-container height */
+  margin-right: 10px;
+  border: 3px solid #919191;
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 96px;
+  left: -8px;
+}
+
+.progress-indicator-circle-three {
+  width: 18px;
+  height: 20px;
+  /* Adjust to match the step-container height */
+  margin-right: 10px;
+  border: 3px solid #919191;
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 176px;
+  left: -8px;
+}
+
+.progress-indicator {
+  width: 3px;
+  height: 34px;
+  /* Adjust to match the step-container height */
+  margin-right: 10px;
+  position: absolute;
+  top: 62px;
+  left: 13px;
+}
+
+.progress-indicator-two {
+  width: 3px;
+  height: 34px;
+  /* Adjust to match the step-container height */
+  margin-right: 10px;
+  position: absolute;
+  top: 142px;
+  left: 13px;
+}
+
+.step {
+  position: relative;
 }
 </style>
-
-
-<!--<template>
-  <div>
-    <div class="topbar">
-      <ul>
-        <li>About Us</li>
-        <li>My Account</li>
-        <li>Wishlist</li>
-        <li>Order Tracking</li>
-      </ul>
-      <div class="flex">
-        <p>Need help? Call Us:<span class="green"> + 1800 900 </span></p>
-        <p>English</p>
-        <p>USD</p>
-      </div>
-    </div>
-    <div class="navbutton">
-      <div class="navbar">
-        <div class="contain">
-          <img
-            alt="Vue logo"
-            src="../assets/logo.svg"
-            width="180"
-            height="100"
-          />
-        </div>
-        <div class="all-categories">
-          <h4>All Categories</h4>
-        </div>
-      </div>
-      <div class="buttons">
-        <button v-on:click="showLoginModal" class="buttonlogin">Login</button>
-        <button class="buttonsignup">Sign Up</button>
-      </div>
-    </div>
-
-    <LoginPage  v-if="isLoginModalVisible" @close="closeLoginModal" />
-  </div>
-</template>
-
-<script>
-import LoginPage from './LoginPage.vue';
-
-export default {
-  name: "HelloWorld",
-  components: {
-    LoginPage,
-  },
-  data() {
-    return {
-      isLoginModalVisible: false,
-    };
-  },
-  methods: {
-    showLoginModal() {
-      this.isLoginModalVisible = true;
-    },
-    closeLoginModal() {
-      this.isLoginModalVisible = false;
-    },
-  },
-};
-</script>
-
-<style scoped>
-/* Existing styles */
-.topbar {
-  color: #7e7e7e;
-  font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 0.1rem solid #d8d8d8;
-}
-.navbutton {
-  display: flex;
-  justify-content: space-between;
-}
-.flex {
-  display: flex;
-  gap: 1rem;
-}
-.green {
-  color: #42b983;
-}
-.navbar {
-  display: flex;
-}
-.all-categories {
-  border: 0.16rem solid #a4d8c1;
-  padding: 0;
-  border-radius: 5%;
-  margin: 1.7rem;
-  margin-left: 5rem;
-}
-h3 {
-  display: flex;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.buttons {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.buttonlogin {
-  background-color: #3bb77e;
-  border: 0em;
-  border-radius: 8%;
-  color: rgb(255, 255, 255);
-  font-size: 16px;
-  padding: 0.76rem 2.4rem;
-}
-.buttonsignup {
-  background-color: #3bb77e;
-  border: 0em;
-  border-radius: 8%;
-  color: rgb(255, 255, 255);
-  font-size: 16px;
-  padding: 0.76rem 2.4rem;
-}
-
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-
-</style>
--->
