@@ -135,19 +135,20 @@ h1 {
   flex-direction: column;
   align-items: flex-start;
   height : 100%;
+  
   /* padding-bottom: 410px; */
 }
  
 .para {
   color: rgb(143, 143, 143);
   margin-top: 10px;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 }
 .contain {
   display: flex;
   flex-direction: column;
   justify-content: center;
- 
+  padding: 10px;
   /* padding: 0 80px 0 160px; */
 }
  
@@ -156,6 +157,7 @@ h1 {
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+
 }
 .flex {
   display: flex;
@@ -182,8 +184,13 @@ input {
   width: 100%;
   box-sizing: border-box;
 }
+
+form {
+  padding: 10px;
+}
  
 .form-group {
+  
   margin-bottom: 1rem;
   justify-content: flex-start;
 }

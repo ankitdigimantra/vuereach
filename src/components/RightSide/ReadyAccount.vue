@@ -73,7 +73,7 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  padding: 20px
   /* padding: 0 80px 0 160px; */
 }
 

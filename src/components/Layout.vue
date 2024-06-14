@@ -69,7 +69,7 @@ html, body, #app {
  
 .leftbar, .rightbar {
   flex: 1;
-  min-width: 50%;
+  /* min-width: 50%; */
 }
  
 .leftbar {
@@ -91,8 +91,8 @@ html, body, #app {
     flex-direction: column;
   }
   
-  .leftbar, .rightbar {
+  /* .leftbar, .rightbar {
     min-width: 100%;
-  }
+  } */
 }
 </style>
