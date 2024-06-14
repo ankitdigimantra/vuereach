@@ -201,6 +201,17 @@ p {
   margin-bottom: 140px;
 }
 
+@media (max-width: 1024px) {
+  .contain {
+  margin-bottom: 10px;
+}
+
+.progressbar {
+  margin-bottom: 2px;
+}
+}
+
+
 .progressbar {
   margin-bottom: 20px;
 }

@@ -32,11 +32,16 @@ export default {
     changeMode() {
       // Handle mode change if needed
     },
+    handleBackClicked() {
+      
+      this.currentComponent = "LetStart"; // Switch to ShipPrefer component
+    },
     // Method to handle Next button click from LetStart component
     handleNextClicked() {
       
       this.currentComponent = "ShipPrefer"; // Switch to ShipPrefer component
     },
+    
 
     handleShipNextClicked() {
       this.currentComponent = "ReadyAccount";
@@ -46,6 +51,7 @@ export default {
     // Listen for the event emitted by LetStart component
     // this.$on("nextClicked", this.handleNextClicked);
     // emitter.on("nextClicked", this.handleNextClicked);
+    EventBus.on("letsStartBackClicked", this.handleBackClicked);
     EventBus.on("nextClicked", this.handleNextClicked);
     EventBus.on("shipNextClicked", this.handleShipNextClicked);
     // console.log("sfsdfsdfsdf")
