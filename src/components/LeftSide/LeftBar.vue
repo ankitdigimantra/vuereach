@@ -198,7 +198,7 @@ p {
 }
 
 .contain {
-  margin-bottom: 140px;
+  margin-bottom: 100px;
 }
 
 @media (max-width: 1024px) {

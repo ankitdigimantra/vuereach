@@ -162,18 +162,19 @@
       <div class="flex-button">
         <div class="form-column">
           <div class="form-back-actions">
-            <button
-              class="next-button"
-              type="button"
-              @click="goToLetsStart"
-            >
+            <button class="next-button" type="button" @click="goToLetsStart">
               Back
             </button>
           </div>
         </div>
         <div class="form-column">
           <div class="form-next-actions">
-            <button class="next-button" type="button" :disabled="!isFormValid" @click="goToReadyAccount">
+            <button
+              class="next-button"
+              type="button"
+              :disabled="!isFormValid"
+              @click="goToReadyAccount"
+            >
               Next
             </button>
           </div>
@@ -236,12 +237,8 @@ export default {
     selectMode(mode) {
       this.selectedMode = mode;
     },
-    toggleCheckbox() {
-      // Implement your checkbox toggle logic if needed
-    },
-    proceedToNextPage() {
-      // Implement your form submission logic if needed
-    },
+    toggleCheckbox() {},
+    proceedToNextPage() {},
   },
 };
 </script>
@@ -278,7 +275,7 @@ label {
   font-size: 16px;
   display: flex;
   padding: 6px 0 0 0;
-  
+
   justify-content: flex-start;
 }
 
@@ -298,7 +295,7 @@ label {
 }
 .flex-button {
   /* max-width: 80%; */
-  margin: 40px 0 0 0 ;
+  margin: 40px 0 0 0;
   gap: 10px;
   width: 100%;
   display: flex;
@@ -325,13 +322,14 @@ label {
   align-items: center;
 }
 
-.container{
+.container {
   max-width: 480px;
 }
 
 .p-gray {
   color: #727272;
   font-size: 14px;
+  text-decoration: underline;
 }
 
 select {
@@ -571,7 +569,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 </style>
-
 
 <!--<template>
   <div class="contain">
