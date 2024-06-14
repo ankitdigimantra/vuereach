@@ -384,6 +384,12 @@ select {
     display: flex;
     justify-content: center;
   }
+
+  .group-switch {
+    padding: 0px !important;
+    /* margin: 10px 0 10px 0; */
+    margin: 30px 0 30px 0 !important;
+  }
 }
 
 .rightbar {
@@ -402,6 +408,12 @@ select {
   .selected-city {
     max-width: 280px;
   }
+ 
+  .switch-button {
+    padding: 10px;
+    margin-top: 2px;
+  }
+   
 }
 
 /* @media (max-width: 1024px) {

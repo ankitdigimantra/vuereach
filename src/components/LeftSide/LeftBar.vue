@@ -9,7 +9,8 @@
         <br />Reach!
       </h1>
     </div>
-    <div class="content">
+    <VerticalPB class="" />
+    <div class="progressbar-content">
       <!-- First Step -->
       <div class="step-container">
         <div
@@ -125,9 +126,13 @@
 
 <script>
 import EventBus from "@/EventBus";
+// import VerticalPB from "./ProgressIndicator.vue"
 
 export default {
   name: "LeftBar",
+  components: {
+    // VerticalPB
+  },
   data() {
     return {
       activeStep: "start",
@@ -209,6 +214,11 @@ p {
 .progressbar {
   margin-bottom: 2px;
 }
+
+.progressbar-content{
+  display: none !important;
+}
+
 }
 
 
@@ -216,7 +226,7 @@ p {
   margin-bottom: 20px;
 }
 
-.content {
+.progressbar-content {
   margin-bottom: 40px;
   align-items: flex-start;
   display: flex;
