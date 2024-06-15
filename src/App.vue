@@ -26,6 +26,7 @@ export default {
 }
 body {
   height: 100vh;
+  width: 100%;
   margin: 0;
   font: 16px;
 }

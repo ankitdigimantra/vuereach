@@ -6,101 +6,96 @@
         <h1>Let's get started!</h1>
         <p class="para">Please provide your billing address.</p>
       </div>
- 
+
       <form @submit.prevent="proceedToNextPage">
         <div class="form-group">
           <div class="flex">
             <div class="column">
-              <label
-                class="label"
-                for="email"
-                style="width: 100%; display: flex"
-                >First Name</label
-              >
+              <label class="label" for="firstname" style="display: flex;">First Name</label>
               <input
-                type="name"
+                type="text"
                 id="firstname"
                 v-model="firstname"
                 placeholder="First Name"
+                @input="validateName"
+                :class="{ 'error-border': !isValidName }"
                 required
               />
+              <span v-if="!isValidName" class="error-message">Please enter a valid without spaces</span>
             </div>
             <div class="column">
-              <label
-                class="label"
-                for="password"
-                style="width: 100%; display: flex"
-                >Last Name</label
-              >
+              <label class="label" for="lastname" style="display: flex;">Last Name</label>
               <input
-                type="lastname"
+                type="text"
                 id="lastname"
                 v-model="lastname"
                 placeholder="Last Name"
+                @input="validateLastName"
+                :class="{ 'error-border': !isValidLastName }"
                 required
               />
+              <span v-if="!isValidLastName" class="error-message">Please enter a valid without spaces</span>
             </div>
           </div>
-          <label class="label" for="email" style="width: 100%; display: flex"
-            >Billing address</label
-          >
+          <label class="label" for="address" style="display: flex;">Billing address</label>
           <input
-            type="address"
+            type="text"
             id="address"
             v-model="address"
             placeholder="1234 queen address"
+            @input="validateAddress"
+            :class="{ 'error-border': !isValidAddress }"
             required
           />
- 
+          <span v-if="!isValidAddress" class="error-message">Please enter a valid address</span>
+
           <div class="flex">
             <div class="column">
-              <label
-                class="label"
-                for="email"
-                style="width: 100%; display: flex"
-                >Postal Code</label
-              >
+              <label class="label" for="postal" style="display: flex;">Postal Code</label>
               <input
-                type="postal"
+                type="text"
                 id="postal"
                 v-model="postal"
                 placeholder="Postal Code"
+                @input="validatePostal"
+                :class="{ 'error-border': !isValidPostal }"
                 required
               />
+              <span v-if="!isValidPostal" class="error-message">Please enter a valid postal code</span>
             </div>
             <div class="column">
-              <label
-                class="label"
-                for="password"
-                style="width: 100%; display: flex"
-                >Province</label
-              >
+              <label class="label" for="province" style="display: flex;">Province</label>
               <input
-                type="province"
+                type="text"
                 id="province"
                 v-model="province"
                 placeholder="Province"
+                @input="validateProvince"
+                :class="{ 'error-border': !isValidProvince }"
                 required
               />
+              <span v-if="!isValidProvince" class="error-message">Please enter a valid province</span>
             </div>
           </div>
- 
-          <label class="label" for="password" style="width: 100%; display: flex"
-            >Phone Number</label
-          >
+
+          <label class="label" for="number" style="display: flex;">Phone Number</label>
           <input
-            type="phonenumber"
+            type="text"
             id="number"
             v-model="number"
             placeholder="Phone Number"
+            @input="validateNumber"
+            :class="{ 'error-border': !isValidNumber }"
             required
           />
+          <span v-if="!isValidNumber" class="error-message">Please enter a valid phone number</span>
         </div>
         <div class="form-actions">
           <button
             class="next-button"
             type="submit"
             @click="goToShippingPreferences"
+            :disabled="!isFormValid"
           >
             Next
           </button>
@@ -110,89 +105,166 @@
   </div>
 </template>
 <script>
-import EventBus from '@/EventBus';
- 
+import EventBus from "@/EventBus";
+
 export default {
   name: "LetStart",
-  
+  data() {
+    return {
+      firstname: "",
+      lastname: "",
+      address: "",
+      postal: "",
+      province: "",
+      number: "",
+      isValidName: true,
+      isValidLastName: true,
+      isValidAddress: true,
+      isValidPostal: true,
+      isValidProvince: true,
+      isValidNumber: true,
+    };
+  },
+  computed: {
+    isFormValid() {
+      return (
+        this.isValidName &&
+        this.isValidLastName &&
+        this.isValidAddress &&
+        this.isValidPostal &&
+        this.isValidProvince &&
+        this.isValidNumber &&
+        this.firstname &&
+        this.lastname &&
+        this.address &&
+        this.postal &&
+        this.province &&
+        this.number
+      );
+    },
+  },
   methods: {
     goToShippingPreferences() {
       EventBus.emit("nextClicked");
     },
+    validateName() {
+      const namePattern = /^[^\s]+$/;
+      this.isValidName = namePattern.test(this.firstname);
+    },
+    validateLastName() {
+      const namePattern = /^[^\s]+$/;
+      this.isValidLastName = namePattern.test(this.lastname);
+    },
+    validateAddress() {
+      this.isValidAddress = this.address.trim().length > 0;
+    },
+    validatePostal() {
+      const postalPattern = /^[A-Za-z0-9\s]+$/;
+      this.isValidPostal = postalPattern.test(this.postal);
+    },
+    validateProvince() {
+      const provincePattern = /^[A-Za-z\s]+$/;
+      this.isValidProvince = provincePattern.test(this.province);
+    },
+    validateNumber() {
+      const numberPattern = /^[0-9]+$/;
+      this.isValidNumber = numberPattern.test(this.number);
+    },
   },
 };
 </script>
- 
 <style scoped>
 h1 {
   color: #2e6666;
   margin: 0;
   padding: 0;
 }
- 
+
+input.error-border {
+  border: 1px solid red !important;
+}
+
+input:focus {
+  outline: none;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 1px;
+  display: flex;
+  justify-content: flex-start;
+}
+
 .aligncenter {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height : 100%;
-  /* padding-bottom: 410px; */
+  height: 100%;
 }
- 
+
 .para {
   color: rgb(143, 143, 143);
   margin-top: 10px;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 }
+
 .contain {
   display: flex;
   flex-direction: column;
   justify-content: center;
- 
-  /* padding: 0 80px 0 160px; */
+  padding: 10px;
 }
- 
+
 .rightbar {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
 }
+
 .flex {
   display: flex;
   justify-content: space-between;
 }
- 
+
 .column {
-  width: 48%; /* Adjust the width as needed */
+  width: 48%;
   display: flex;
   flex-direction: column;
 }
- 
+
 .label {
   margin-bottom: 8px;
   font-size: 16px;
+  padding: 20px 0 0 0;
 }
- 
+
 input {
   padding: 12px;
   font-size: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 1px;
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
   box-sizing: border-box;
 }
- 
+
+form {
+  padding: 10px;
+}
+
 .form-group {
   margin-bottom: 1rem;
+  gap: 20px;
   justify-content: flex-start;
 }
- 
+
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
 }
- 
+
 .form-group input {
   width: 100%;
   padding: 0.6rem 0.4rem 0.6rem 0.4rem;
@@ -200,14 +272,14 @@ input {
   border-radius: 4px;
   padding-left: 0.3rem;
 }
- 
+
 .form-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 2rem 0rem 2rem 0rem;
 }
- 
+
 .form-actions button {
   padding: 0.8rem 1rem;
   border: none;
@@ -217,167 +289,14 @@ input {
   background-color: #2e6666;
   width: 100%;
 }
- 
+
+.form-actions button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .next-button {
   padding: 4px;
+  font-size: 16px;
 }
 </style>
- 
-<!--<template>
-    <div class="modal-overlay" @click.self="$emit('close')">
-      <div class="white">
-      <div class="modal-content">
-        <div class="logincontain">
-           <img alt="Vue logo" src="../assets/logo.svg" width="180" height="100" />
-          <h1>Login</h1>
-        </div>
-        <form @submit.prevent="login">
-          <div class="form-group">
-            <label class="label" for="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              v-model="email"
-              placeholder="Email"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              v-model="password"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <div class="form-actions">
-            <button type="submit">Login</button>
-            <button type="button" @click="forgotPassword">Forgot Password</button>
-          </div>
-          <div class="sign-up">
-            <p>
-              Don't have an account?
-              <a href="#" @click.prevent="signUp">Sign Up</a>
-            </p>
-          </div>
-        </form>
-      </div>
-    </div>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "LetStart",
-    data() {
-      return {
-        email: "",
-        password: "",
-      };
-    },
-    methods: {
-      login() {
-        console.log("Login attempt with", this.email, this.password);
-        alert(`Login attempt with ${this.email}`);
-      },
-      forgotPassword() {
-        console.log("Forgot Password clicked");
-        alert("Forgot Password");
-      },
-      signUp() {
-        console.log("Sign Up clicked");
-        alert("Redirect to Sign Up");
-      },
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .white{
-    background-color: rgb(255, 255, 255);
-    padding: 2rem;
-    border-radius: 4%;
-  }
-  
-  .logincontain {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem;
-  }
-  
-  .label {
-    display: flex;
-  }
-  
-  
-  
-  .form-group {
-    margin-bottom: 1rem;
-    justify-content: flex-start;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 0.5rem 0rem 0.5rem 0rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding-left: 0.3rem;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 2rem 0rem 2rem 0rem;
-  }
-  
-  .form-actions button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .form-actions button:first-child {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .form-actions button:last-child {
-    background-color: #6c757d;
-    color: white;
-  }
-  
-  .sign-up {
-    margin-top: 1rem;
-    text-align: center;
-  }
-  
-  .sign-up a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .sign-up a:hover {
-    text-decoration: underline;
-  }
-  </style>
-  -->
