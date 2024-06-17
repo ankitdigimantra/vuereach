@@ -51,7 +51,7 @@ export default {
     // Listen for the event emitted by LetStart component
     // this.$on("nextClicked", this.handleNextClicked);
     // emitter.on("nextClicked", this.handleNextClicked);
-    EventBus.on("letsStartBackClicked", this.handleBackClicked);
+    EventBus.on("backClicked", this.handleBackClicked);
     EventBus.on("nextClicked", this.handleNextClicked);
     EventBus.on("shipNextClicked", this.handleShipNextClicked);
     // console.log("sfsdfsdfsdf")

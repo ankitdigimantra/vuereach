@@ -21,7 +21,7 @@
                 :class="{ 'error-border': !isValidName }"
                 required
               />
-              <span v-if="!isValidName" class="error-message">Please enter a valid without spaces</span>
+              <span v-if="!isValidName" class="error-message">Please enter a valid name without spaces</span>
             </div>
             <div class="column">
               <label class="label" for="lastname" style="display: flex;">Last Name</label>
@@ -34,7 +34,7 @@
                 :class="{ 'error-border': !isValidLastName }"
                 required
               />
-              <span v-if="!isValidLastName" class="error-message">Please enter a valid without spaces</span>
+              <span v-if="!isValidLastName" class="error-message">Please enter a valid name without spaces</span>
             </div>
           </div>
           <label class="label" for="address" style="display: flex;">Billing address</label>
@@ -42,7 +42,7 @@
             type="text"
             id="address"
             v-model="address"
-            placeholder="1234 queen address"
+            placeholder="1234 Queen Street"
             @input="validateAddress"
             :class="{ 'error-border': !isValidAddress }"
             required
@@ -65,16 +65,19 @@
             </div>
             <div class="column">
               <label class="label" for="province" style="display: flex;">Province</label>
-              <input
-                type="text"
+              <select
                 id="province"
                 v-model="province"
-                placeholder="Province"
-                @input="validateProvince"
+                @change="validateProvince"
                 :class="{ 'error-border': !isValidProvince }"
                 required
-              />
-              <span v-if="!isValidProvince" class="error-message">Please enter a valid province</span>
+              >
+                <option disabled value="">Please select one</option>
+                <option v-for="province in provinces" :key="province" :value="province">
+                  {{ province }}
+                </option>
+              </select>
+              <span v-if="!isValidProvince" class="error-message">Please select a valid province</span>
             </div>
           </div>
 
@@ -123,6 +126,7 @@ export default {
       isValidPostal: true,
       isValidProvince: true,
       isValidNumber: true,
+      provinces: ["Province 1", "Province 2", "Province 3", "Province 4"], // Replace with actual provinces
     };
   },
   computed: {
@@ -163,8 +167,7 @@ export default {
       this.isValidPostal = postalPattern.test(this.postal);
     },
     validateProvince() {
-      const provincePattern = /^[A-Za-z\s]+$/;
-      this.isValidProvince = provincePattern.test(this.province);
+      this.isValidProvince = this.province.trim().length > 0;
     },
     validateNumber() {
       const numberPattern = /^[0-9]+$/;
@@ -180,11 +183,17 @@ h1 {
   padding: 0;
 }
 
-input.error-border {
+select {
+  background-color: #FFF;
+}
+
+input.error-border,
+select.error-border {
   border: 1px solid red !important;
 }
 
-input:focus {
+input:focus,
+select:focus {
   outline: none;
 }
 
@@ -240,7 +249,8 @@ input:focus {
   padding: 20px 0 0 0;
 }
 
-input {
+input,
+select {
   padding: 12px;
   font-size: 16px;
   margin-bottom: 1px;
@@ -265,7 +275,8 @@ form {
   margin-bottom: 0.5rem;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
   width: 100%;
   padding: 0.6rem 0.4rem 0.6rem 0.4rem;
   border: 1px solid #ccc;

@@ -137,24 +137,33 @@
             </div>
 
             <label class="labell" for="province">Province</label>
-            <input
+            <select
               class="input-form"
-              type="text"
               id="province"
               v-model="province"
-              placeholder="Province"
               required
-            />
+            >
+              <option disabled value="">Please select province</option>
+              <option
+                v-for="province in provinces"
+                :key="province"
+                :value="province"
+              >
+                {{ province }}
+              </option>
+            </select>
 
             <label class="labell" for="country">Country</label>
-            <input
-              class="input-form"
-              type="text"
-              id="country"
-              v-model="country"
-              placeholder="Country"
-              required
-            />
+            <select class="input-form" id="country" v-model="othercountry" required>
+              <option disabled value="">Please select country</option>
+              <option
+                v-for="country in countries"
+                :key="country"
+                :value="country"
+              >
+                {{ country }}
+              </option>
+            </select>
           </div>
         </form>
       </div>
@@ -208,7 +217,32 @@ export default {
       city: "",
       postal: "",
       province: "",
-      country: "",
+      provinces: [
+        "Ontario",
+        "Quebec",
+        "British Columbia",
+        "Alberta",
+        "Manitoba",
+        "Saskatchewan",
+        "Nova Scotia",
+        "New Brunswick",
+        "Newfoundland and Labrador",
+        "Prince Edward Island",
+        "Northwest Territories",
+        "Yukon",
+        "Nunavut"
+      ],
+      othercountry:"",
+      country: [
+        "Canada",
+        "United States",
+        "Mexico",
+        "United Kingdom",
+        "Germany",
+        "France",
+        "Australia",
+        "India",
+      ],
     };
   },
   computed: {
@@ -232,7 +266,7 @@ export default {
       EventBus.emit("shipNextClicked");
     },
     goToLetsStart() {
-      EventBus.emit("letsStartBackClicked");
+      EventBus.emit("backClicked");
     },
     selectMode(mode) {
       this.selectedMode = mode;
@@ -282,6 +316,7 @@ label {
 .input-form {
   padding: 12px;
   font-size: 16px;
+  margin: 0px !important;
   /* margin-bottom: 16px; */
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -408,25 +443,22 @@ select {
   .selected-city {
     max-width: 360px;
   }
- 
+
   .switch-button {
     padding: 10px;
     margin-top: 2px;
   }
-   
 }
-
 
 @media (max-width: 375px) {
   .selected-city {
     max-width: 280px;
   }
- 
+
   .switch-button {
     padding: 10px;
     margin-top: 2px;
   }
-   
 }
 /* @media (max-width: 1024px) {
   .selected-city {

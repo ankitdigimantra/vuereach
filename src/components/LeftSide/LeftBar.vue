@@ -40,10 +40,19 @@ export default {
         this.activeStep = this.steps[currentStepIndex + 1];
       }
     },
+    handleBackClicked() {
+      this.activeStep = "start";
+    },
   },
   mounted() {
     EventBus.on("nextClicked", this.handleNextClicked);
     EventBus.on("shipNextClicked", this.handleNextClicked);
+    EventBus.on("backClicked", this.handleBackClicked);
+  },
+  beforeUnmount() {
+    EventBus.off("nextClicked", this.handleNextClicked);
+    EventBus.off("shipNextClicked", this.handleNextClicked);
+    EventBus.off("backClicked", this.handleBackClicked);
   },
 };
 </script>
