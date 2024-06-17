@@ -10,17 +10,17 @@
       </h1>
     </div>
     <div class="flex">
-     <HorizontalPB :activeStep="activeStep" :steps="steps" />
-    <VerticalPB :activeStep="activeStep" :steps="steps" />
-  </div>
+      <HorizontalPB :activeStep="activeStep" :steps="steps" />
+      <VerticalPB :activeStep="activeStep" :steps="steps" />
+    </div>
   </div>
 </template>
- 
+
 <script>
 import EventBus from "@/EventBus";
 import VerticalPB from "./VerticalPB.vue";
 import HorizontalPB from "./HorizontalPB.vue";
- 
+
 export default {
   name: "LeftBar",
   components: {
@@ -56,46 +56,52 @@ export default {
   },
 };
 </script>
- 
+
 <style scoped>
 h1 {
   color: #000000;
   font-size: xxx-large;
   text-align: start;
 }
- 
-.flex{
-  display:flex;
+
+.flex {
+  display: flex;
   justify-content: center;
 }
 .sidebar {
   width: 100%;
- 
+
   flex-direction: column;
 }
- 
+
 .contain {
   margin-bottom: 100px;
 }
- 
+
 @media (max-width: 1024px) {
-.sidebar {
-  max-height: 415px;
-}
+  .sidebar {
+    max-height: 415px;
+  }
+
+  h1 {
+    color: #000000;
+    font-size: 40px;
+    text-align: start;
+  }
 
   .contain {
-    margin-bottom: 10px;
+    margin-bottom: 1px;
   }
- 
+
   .progressbar {
     margin-bottom: 2px;
   }
- 
+
   .progressbar-content {
     display: none !important;
   }
 }
- 
+
 .progressbar {
   margin-bottom: 20px;
 }

@@ -126,7 +126,7 @@ export default {
       isValidPostal: true,
       isValidProvince: true,
       isValidNumber: true,
-      provinces: ["Province 1", "Province 2", "Province 3", "Province 4"], // Replace with actual provinces
+      provinces: ["Punjab", "Haryana", "Himachal Pardesh", "Chandigarh"], // Replace with actual provinces
     };
   },
   computed: {
@@ -147,6 +147,7 @@ export default {
       );
     },
   },
+  
   methods: {
     goToShippingPreferences() {
       EventBus.emit("nextClicked");
