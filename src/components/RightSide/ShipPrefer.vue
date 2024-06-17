@@ -406,7 +406,7 @@ select {
 
 @media (max-width: 786px) {
   .selected-city {
-    max-width: 280px;
+    max-width: 360px;
   }
  
   .switch-button {
@@ -416,6 +416,18 @@ select {
    
 }
 
+
+@media (max-width: 375px) {
+  .selected-city {
+    max-width: 280px;
+  }
+ 
+  .switch-button {
+    padding: 10px;
+    margin-top: 2px;
+  }
+   
+}
 /* @media (max-width: 1024px) {
   .selected-city {
     max-width: 360px;
@@ -449,6 +461,7 @@ select {
 
 .group-switch {
   display: flex;
+  justify-content: center;
   padding: 0 30px;
   margin: 40px 0 40px 0;
 }
@@ -560,7 +573,7 @@ select {
 }
 
 input:checked + .slider {
-  background-color: #008cff;
+  background-color: #2e6666;
 }
 
 input:focus + .slider {
